@@ -5,13 +5,14 @@ import { useState, useEffect } from 'react';
 const MovieDetails = () => {
     const { movieid } = useParams();
     // console.log(movieid)
+    const moviekey = process.env.api_key
 
     const [movieDetails, setMovieDetails] = useState({});
     const [movieDetailsLoading, setMovieDetailsLoading] = useState(true);
 
     useEffect( () => {
         // console.log("request moviedetails for", movieid)
-        fetch(`https://api.themoviedb.org/3/movie/${movieid}?api_key=2433d2d13371fac62686123cefbac0b5`)
+        fetch(`https://api.themoviedb.org/3/movie/${movieid}?api_key=${moviekey}`)
             .then(response => response.json())
             .then(data => {
                 // console.log(data);
