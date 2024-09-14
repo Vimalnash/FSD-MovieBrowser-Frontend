@@ -14,7 +14,10 @@ function App() {
   const [searchFinalText, setSearchFinalText] = useState('');
   const [userName, setUserName] = useState('avi');
   const [userPassword, setUserPassword] = useState('avi');
-  const [showHome, setShowHome] = useState(false)
+  const [showHome, setShowHome] = useState(false);
+
+  const moviekey = import.meta.env.VITE_API_KEY;
+  const movietoken = import.meta.env.VITE_TOKEN;
 
   useEffect(() => {
     if (searchFinalText) {
@@ -22,15 +25,15 @@ function App() {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNDMzZDJkMTMzNzFmYWM2MjY4NjEyM2NlZmJhYzBiNSIsInN1YiI6IjY0ZTIzZjM5OGMwYTQ4MDExZDQyYzI3YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CDr0HqTwav5ZP19X7EcKZGRVZdZvUz956n2KZs9e3ag'
+          Authorization: `Bearer ${movietoken}`
         }
       };
       
-      const url=`https://api.themoviedb.org/3/search/movie?query=${searchFinalText}&api_key=2433d2d13371fac62686123cefbac0b5/`
+      const url=`https://api.themoviedb.org/3/search/movie?query=${searchFinalText}&api_key=${moviekey}/`
       fetch(url, options)
         .then(response => response.json())
         .then(data => {
-          console.log(data)
+          // console.log(data)
           setSearchResults(data.results)
         // .catch(err => console.error(err));
       })
@@ -44,7 +47,9 @@ function App() {
         showHome={showHome} setShowHome={setShowHome} 
       />
       <Routes>
-        <Route path="/" element={
+        <Route exact path="/home" element={<Home />} />
+
+        <Route path="/login" element={
             <Login 
               userName={userName} 
               setUserName={setUserName} 
@@ -54,46 +59,15 @@ function App() {
             />
           }
         />
-      <Route path="/home" element={<Home />} />
       <Route path="/about" element={<AboutView />} />
       <Route path="/search" element={
-        <SearchView searchFinalText={searchFinalText} searchResults={searchResults} />
-      } 
+          <SearchView searchFinalText={searchFinalText} searchResults={searchResults} />
+        } 
       />
       <Route path="/moviedetails/:movieid" element={<MovieDetails />} />
-    </Routes>    
-      {/* <ShowHomePage showHome={showHome} /> */}
+    </Routes>
     </div>
   );
 }
 
 export default App;
-
-
-  // console.log(searchText, " is the text you searched for")
-  // setSearchText('NewText');
-  // setTimeout(function() {
-  //   console.log(searchText, " changed")
-  // }, 2000)
-
-  // const ShowHomePage = ({showHome}) => {
-  //   if (showHome) {
-  //     return (
-  //       <>
-  //         <Navbar searchInputText={searchInputText} setSearchInputText={setSearchInputText}  
-  //                 searchFinalText={searchFinalText} setSearchFinalText={setSearchFinalText} 
-  //                 showHome={showHome} setShowHome={setShowHome} 
-  //         />
-  //         <Routes>
-  //           <Route path="/home" element={<Home />} />
-  //           <Route path="/about" element={<AboutView />} />
-  //           <Route path="/search" element={
-  //             <SearchView searchFinalText={searchFinalText} searchResults={searchResults} />
-  //             } 
-  //           />
-  //           <Route path="/moviedetails/:movieid" element={<MovieDetails />} />
-  //         </Routes>        
-  //       </>
-  //     )
-  //   }
-  // }

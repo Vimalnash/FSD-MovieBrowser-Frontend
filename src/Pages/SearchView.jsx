@@ -1,8 +1,6 @@
 import Hero from "../Components/Hero";
 import { Link } from "react-router-dom";
-
-// TMDB API Key =>  2433d2d13371fac62686123cefbac0b5
-// https://api.themoviedb.org/3/movie/550?api_key=2433d2d13371fac62686123cefbac0b5
+import noImageLabel  from "../assets/images/No_Image_Available.jpg"
 
 const SearchView = ( { searchFinalText, searchResults} ) => {
   let titletext = '';
@@ -14,7 +12,7 @@ const SearchView = ( { searchFinalText, searchResults} ) => {
   const Movies = ( {movie} ) => {
     let movieimage='';
     if (movie.poster_path === null) {
-      movieimage = "images/No_Image_Available.jpg";      
+      movieimage = noImageLabel;      
     }
     if (movie.poster_path) {
       movieimage = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;

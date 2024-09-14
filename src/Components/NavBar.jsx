@@ -16,11 +16,6 @@ function Navbar({searchFinalText, setSearchFinalText, searchInputText, setSearch
     console.log("Search Button clicked, search text is", searchFinalText)
   }
 
-  let logout;
-  if (showHome) {
-    logout = "/"  
-  }
-
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -93,27 +88,46 @@ function Navbar({searchFinalText, setSearchFinalText, searchInputText, setSearch
                 Disabled
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={logout} onClick={() => {setShowHome(false)}} >
-                Logout
-              </Link>
-            </li>
+            {
+              showHome ?
+              (
+                <li className="nav-item">
+                  <button className="btn btn-danger" type="button" onClick={() => {navigate("/login"); setShowHome(false);}} >
+                    Logout
+                  </button>
+                </li>
+              )
+              :
+              ("")
+            }
+
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              value={searchInputText}
-              // readOnly
-              onChange={changedText}
-              // onChange={(e) => {setSearchText(e.target.value)}}
-            />
-            <button className="btn btn-outline-success" type='submit' onClick={readySearch}>
-                Search
-            </button>
-          </form>
+          {
+            showHome ?
+            (
+              <form className="d-flex">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value={searchInputText}
+                  // readOnly
+                  onChange={changedText}
+                  // onChange={(e) => {setSearchText(e.target.value)}}
+                />
+                <button className="btn btn-outline-success" type='submit' onClick={readySearch}>
+                    Search
+                </button>
+              </form>
+            )
+            :
+            (
+              <button className="btn btn-success" type="button" onClick={() => navigate("/login")}>
+                Login to Search
+              </button>
+            )
+          }
         </div>
       </div>
     </nav>

@@ -1,11 +1,13 @@
 import Hero from '../Components/Hero';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import noImageLabel  from "../assets/images/No_Image_Available.jpg"
 
 const MovieDetails = () => {
     const { movieid } = useParams();
     // console.log(movieid)
-    const moviekey = process.env.api_key
+    const moviekey = import.meta.env.VITE_API_KEY;
+
 
     const [movieDetails, setMovieDetails] = useState({});
     const [movieDetailsLoading, setMovieDetailsLoading] = useState(true);
@@ -33,7 +35,7 @@ const MovieDetails = () => {
             
             let filmposterimageurl='';
             if (movieDetails.poster_path === null){
-                filmposterimageurl = "No_Image_Available.jpg";
+                filmposterimageurl = noImageLabel;
             }
             if (movieDetails.poster_path){
                 filmposterimageurl = `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`;
